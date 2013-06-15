@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>grow by taccon</title>
+
+<link rel="stylesheet" type="text/css" href="./css/style.css">
+<script type="text/javascript" src="./js/jquery-1.5.1.min.js"></script>
+<script type="text/javascript" src="./js/jquery-ui-1.8.13.custom.min.js"></script>
+
+</head>
+
+<body>
+
+
+<script type="text/javascript">
+
+var usedNumbers = [];
+
+addFlower();
+
+function randomId( min, max ) {
+	if( min > max ) {
+		return( -1 );
+	}
+	if( min == max ) {
+		return( min );
+	}
+ 
+ 	var newRandomNumber = randomNumber(min, max);
+ 
+ 	while (usedNumbers.indexOf(newRandomNumber) > -1) {
+		newRandomNumber = randomNumber(min, max);
+ 	}
+ 	
+ 	usedNumbers.push(newRandomNumber);
+
+ 	return newRandomNumber;
+ 	
+}
+
+
+function randomNumber( min, max ) {
+	if( min > max ) {
+		return( -1 );
+	}
+	if( min == max ) {
+		return( min );
+	}
+ 
+ 	var newRandomNumber = min + parseInt( Math.random() * ( max-min+1 ) );
+
+ 	return newRandomNumber;
+ 	
+}
+
+function getPercent(perc, num) {
+	var a = perc/100;
+	var b = a*num;
+	return b;
+}
+
+function addFlower() {
+	var $newFlowerId = 'fl' + randomId(1, 200);
+	var $newFlower = $('<div class="flower" id="' + $newFlowerId + '"/>');	
+	var $percentSize = randomNumber(20, 80);
+	var $rotation = randomNumber(0, 360);
+
+	$('body').append($newFlower);
+	
+	
+	$('#' + $newFlowerId).css('left', randomNumber(80, $(window).width() - 80) + "px");
+	$('#' + $newFlowerId).css('top', randomNumber(80, $(window).height() - 80) + "px");
+
+	$('#' + $newFlowerId).css('width', getPercent($percentSize, 157) + "px");
+	$('#' + $newFlowerId).css('height', getPercent($percentSize, 153) + "px");
+
+	$('#' + $newFlowerId).css('-moz-transform', 'rotate(' + $rotation + 'deg)');
+	$('#' + $newFlowerId).css('-o-transform', 'rotate(' + $rotation + 'deg)');
+	$('#' + $newFlowerId).css('-webkit-transform', 'rotate(' + $rotation + 'deg)');
+	$('#' + $newFlowerId).css('-ms-transform', 'rotate(' + $rotation + 'deg)');
+	
+    $('#' + $newFlowerId).show('scale', { percent: 100 }, 1000);
+	
+	if (usedNumbers.length < 200) {
+		setTimeout('addFlower()',randomNumber(1000, 5000));
+	}
+}
+
+
+</script>
+
+</body>
+
+</html>
